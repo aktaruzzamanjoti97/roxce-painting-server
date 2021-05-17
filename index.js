@@ -49,6 +49,13 @@ client.connect(err => {
     })
   })
 
+  app.get('/oneService/:id', (req, res) =>{
+    serviceCollection.find({_id: ObjectId(req.params.id)})
+    .toArray((err, document)=>{
+      res.send(document)
+    })
+  })
+
 });
 
 app.listen(process.env.PORT || port)
