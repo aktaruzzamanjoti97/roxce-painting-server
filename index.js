@@ -29,7 +29,7 @@ client.connect((err) => {
   app.post("/addService", (req, res) => {
     const data = req.body;
     serviceCollection.insertOne(data).then((result) => {
-      console.log(result);
+      // console.log(result);
       res.send(result.insertedCount > 0);
     });
   });
@@ -37,7 +37,7 @@ client.connect((err) => {
   app.get("/service", (req, res) => {
     serviceCollection.find({}).toArray((err, items) => {
       console.log(err);
-      console.log(items);
+      // console.log(items);
       res.send(items);
     });
   });
@@ -60,10 +60,35 @@ client.connect((err) => {
   app.post("/placeOrder", (req, res) => {
     const info = req.body;
     orderList.insertOne(info).then((result) => {
-      console.log(result);
+      // console.log(result);
       res.send(result.insertedCount > 0);
     });
   });
+
+  app.get("/orderList", (req, res) => {
+    orderList.find({}).toArray((err, document) => {
+      res.send(document);
+    });
+  });
+
+  app.get("/singleOrder/:id", (req, res) => {
+    const id = ObjectId(req.params.id);
+    orderList.find({ _id: id }).toArray((err, document) => {
+      console.log(err);
+      res.send(document);
+    });
+  });
+
+  app.patch("/updateStatus/:id", (req, res) => {
+    const newInfo = req.body;
+    const id = ObjectId(req.params.id);
+    orderList
+      .findOneAndUpdate ({ _id: id }, { $set: { status: newInfo.status } })
+      .then((err, result) => {
+        console.log(err);
+        console.log(result);
+      });
+  });
 });
 
-app.listen(process.env.PORT || port);
+app.listen(process.env.PORT || port)
