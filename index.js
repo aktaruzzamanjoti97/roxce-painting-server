@@ -36,7 +36,6 @@ client.connect((err) => {
   app.get("/service", (req, res) => {
     serviceCollection.find({}).toArray((err, items) => {
       console.log(err);
-
       res.send(items);
     });
   });
@@ -48,10 +47,11 @@ client.connect((err) => {
     });
   });
 
-  app.get("/oneService/:id", (req, res) => {
+  app.get("/singleService/:id", (req, res) => {
     serviceCollection
       .find({ _id: ObjectId(req.params.id) })
-      .toArray((document) => {
+      .toArray((err, document) => {
+        console.log(err);
         res.send(document);
       });
   });
