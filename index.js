@@ -25,6 +25,7 @@ const client = new MongoClient(uri, {
 client.connect((err) => {
   const serviceCollection = client.db("roxcePainting").collection("services");
   const orderList = client.db("roxcePainting").collection("orders");
+  const adminList = client.db("roxcePainting").collection("admins");
 
   app.post("/addService", (req, res) => {
     const data = req.body;
@@ -86,6 +87,14 @@ client.connect((err) => {
         console.log(err);
         console.log(result);
       });
+  });
+
+  app.post("/addAdmin", (req, res) => {
+    const admin = req.body;
+    adminList.insertOne(admin).then((result) => {
+      console.log(result);
+      res.send(result.insertedCount > 0);
+    });
   });
 });
 
