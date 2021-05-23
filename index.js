@@ -96,6 +96,13 @@ client.connect((err) => {
       res.send(result.insertedCount > 0);
     });
   });
+
+  app.get("/adminList", (req, res) => {
+    adminList.find({})
+    .toArray((err, result) => {
+      res.send(result);
+    })
+  })
 });
 
 app.listen(process.env.PORT || port);
