@@ -99,29 +99,32 @@ client.connect((err) => {
   });
 
   app.get("/adminList", (req, res) => {
-    adminList.find({})
-    .toArray((err, result) => {
+    adminList.find({}).toArray((err, result) => {
       res.send(result);
-    })
-  })
+    });
+  });
 
   app.post("/addReview", (req, res) => {
     const data = req.body;
-    reviewList.insertOne(data)
-    .then(result => {
+    reviewList.insertOne(data).then((result) => {
       console.log(result);
-      res.send(result.insertedCount>0)
-    })
-  })
+      res.send(result.insertedCount > 0);
+    });
+  });
 
   app.get("/reviewList", (req, res) => {
-    reviewList.find({})
-    .toArray((err, document) => {
+    reviewList.find({}).toArray((err, document) => {
       console.log(err);
       res.send(document);
-    })
-  })
+    });
+  });
 
+  app.get("/bookingList", (req, res) => {
+    const email = req.query.email;
+    orderList.find({ email: email }).toArray((err, document) => {
+      res.send(document);
+    });
+  });
 });
 
 app.listen(process.env.PORT || port);
