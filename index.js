@@ -113,6 +113,15 @@ client.connect((err) => {
       res.send(result.insertedCount>0)
     })
   })
+
+  app.get("/reviewList", (req, res) => {
+    reviewList.find({})
+    .toArray((err, document) => {
+      console.log(err);
+      res.send(document);
+    })
+  })
+
 });
 
 app.listen(process.env.PORT || port);
