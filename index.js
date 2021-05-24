@@ -26,6 +26,7 @@ client.connect((err) => {
   const serviceCollection = client.db("roxcePainting").collection("services");
   const orderList = client.db("roxcePainting").collection("orders");
   const adminList = client.db("roxcePainting").collection("admins");
+  const reviewList = client.db("roxcePainting").collection("reviews");
 
   app.post("/addService", (req, res) => {
     const data = req.body;
@@ -101,6 +102,15 @@ client.connect((err) => {
     adminList.find({})
     .toArray((err, result) => {
       res.send(result);
+    })
+  })
+
+  app.post("/addReview", (req, res) => {
+    const data = req.body;
+    reviewList.insertOne(data)
+    .then(result => {
+      console.log(result);
+      res.send(result.insertedCount>0)
     })
   })
 });
