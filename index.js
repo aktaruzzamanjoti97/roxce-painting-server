@@ -59,8 +59,10 @@ client.connect((err) => {
   });
 
   app.post("/placeOrder", (req, res) => {
-    const info = req.body;
-    orderList.insertOne(info).then((result) => {
+    const userInfo = req.body;
+    console.log(req.body);
+    orderList.insertOne(userInfo).then((result) => {
+      console.log(result);
       res.send(result.insertedCount > 0);
     });
   });
